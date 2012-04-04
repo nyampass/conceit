@@ -4,12 +4,6 @@
        clojure.test)
   (import [java.util Date Calendar TimeZone]))
 
-(deftest* now-test
-  (let [current-date (Date.)
-        now (now)]
-    (>= (compare now current-date) 0)
-    (< (- (.getTime now) (.getTime current-date)) 1000)))
-
 (deftest* default-timezone-test
   (= (TimeZone/getDefault) (default-timezone)))
 
@@ -128,6 +122,15 @@
   (false? (correct-date? 2031 2 29))
   (false? (correct-date? 2000 4 56)))
 
+(deftest* set-date-test
+  (= (date 2011 12 30 16 41 28 311) (set-date (date 1945 10 5 16 41 28 311) 2011 12 30))
+  (= (date 1987 3 4 10 20 31 100) (set-date (date 2000 5 5 10 20 31 100) 1987 3 4)))
+
+(deftest* set-time-test
+  (= (date 2028 10 24 5 6 7 89) (set-time (date 2028 10 24 1 2 3 4) 5 6 7 89))
+  (= (date 1967 4 5 23 55 13 617) (set-time (date 1967 4 5 0 0 0 0) 23 55 13 617))
+  (= (date 1998 1 25 11 32 40 0) (set-time (date 1998 1 25 1 2 3 4) 11 32 40)))
+
 (deftest* add-date-unit-test
   (= (date 2010 1 3 4 7 12 560) (add-date-unit (date 2000 1 3 4 7 12 560) Calendar/YEAR 10))
   (= (date 2000 1 23 4 7 12 560) (add-date-unit (date 2000 1 3 4 7 12 560) Calendar/DAY_OF_MONTH 20))
@@ -167,6 +170,20 @@
 (deftest* add-millisecs-test
   (= (date 1987 3 15 17 42 30 813) (add-millisecs (date 1987 3 15 17 42 30 412) 401))
   (= (date 2010 5 16 20 23 40 112) (add-millisecs (date 2010 5 16 20 23 40 647) -535)))
+
+(deftest* start-of-day-test
+  (= (date 1987 4 15 0 0 0 0) (start-of-day (date 1987 4 15 13 22 10 567)))
+  (= (date 2011 11 30 0 0 0 0) (start-of-day (date 2011 11 30 23 40 56 998))))
+
+(deftest* start-of-month-test
+  (= (date 1987 4 1 0 0 0 0) (start-of-month (date 1987 4 15 13 22 10 567)))
+  (= (date 2011 11 1 0 0 0 0) (start-of-month (date 2011 11 30 23 40 56 998))))
+
+(deftest* now-test
+  (let [current-date (Date.)
+        now (now)]
+    (>= (compare now current-date) 0)
+    (< (- (.getTime now) (.getTime current-date)) 1000)))
 
 (deftest* simple-date-format-test
   (= "2018.07.22" (simple-date-format "yyyy.MM.dd" (date 2018 7 22)))

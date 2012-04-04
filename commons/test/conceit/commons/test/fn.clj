@@ -1,4 +1,4 @@
-(ns conciet.commons.test.fn
+(ns conceit.commons.test.fn
   (use conceit.commons.fn
        conceit.commons.test
        clojure.test))
