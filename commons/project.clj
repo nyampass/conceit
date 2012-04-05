@@ -4,4 +4,5 @@
                  [javax.mail/mail "1.4.3"]
                  [mongoika "0.6.8"]]
   :dev-dependencies [[lein-ring "0.4.6"]
-                     [swank-clojure "1.4.0"]])
+                     [swank-clojure "1.4.0"]]
+  :aot [conceit.commons])
