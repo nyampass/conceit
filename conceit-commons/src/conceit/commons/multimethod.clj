@@ -1,4 +1,5 @@
-(ns conceit.commons.multimethod)
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
 (defmacro defmethods [name & method-definitions]
   `(do ~@(map (fn [method-definition]

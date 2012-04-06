@@ -1,5 +1,5 @@
 (ns conceit.commons.mail
-  (use conceit.commons.flow)
+  (use conceit.commons)
   (import [java.util Properties]
           [javax.mail Session Message Message$RecipientType Authenticator PasswordAuthentication Transport]
           [javax.mail.internet MimeMessage InternetAddress]))

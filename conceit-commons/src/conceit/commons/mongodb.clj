@@ -1,7 +1,5 @@
 (ns conceit.commons.mongodb
-  (require [mongoika :as mongo]
-           [conceit.commons
-            [map :as map]]))
+  (require [mongoika :as mongo]))
 
 (defn restrict-by-id [id coll]
   (mongo/restrict :_id (mongo/object-id<- id) coll))

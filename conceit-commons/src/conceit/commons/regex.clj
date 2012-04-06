@@ -1,5 +1,6 @@
-(ns conceit.commons.regex
-  (import java.util.regex.Pattern))
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
+(import java.util.regex.Pattern)
 
 (defn regex? [obj]
   (instance? Pattern obj))

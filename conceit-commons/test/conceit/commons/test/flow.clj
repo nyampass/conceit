@@ -1,5 +1,5 @@
 (ns conceit.commons.test.flow
-  (use conceit.commons.flow
+  (use conceit.commons
        conceit.commons.test
        clojure.test))
 

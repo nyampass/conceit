@@ -1,5 +1,7 @@
-(ns conceit.commons.assert
-  "Utilities about assertion.")
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
-(defmacro assert-multi [& forms]
+(defmacro assert-multi
+  "Asserts multiple values."
+  [& forms]  
   `(do ~@(for [form forms] `(assert ~form))))

@@ -1,5 +1,5 @@
 (ns conceit.commons.test.coll
-  (use conceit.commons.coll
+  (use conceit.commons
        conceit.commons.test
        clojure.test))
 

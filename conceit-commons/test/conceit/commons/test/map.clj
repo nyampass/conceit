@@ -1,5 +1,5 @@
 (ns conceit.commons.test.map
-  (use conceit.commons.map
+  (use conceit.commons
        conceit.commons.test
        clojure.test)
   (require [clojure.string :as string]))

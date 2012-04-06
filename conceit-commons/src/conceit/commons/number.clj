@@ -1,6 +1,9 @@
-(ns conceit.commons.number)
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
-(defmulti int-from (fn [x] (type x)))
+(defmulti int-from
+  "Returns an integer value converted from `x`, or nil if `x` can not to be converted to an integer value."
+  (fn [x] (type x)))
 (defmethod int-from :default [x]
   (long x))
 (defmethod int-from Character [c]
@@ -11,7 +14,9 @@
   (try (Long/parseLong s)
        (catch Exception _ nil)))
 
-(defmulti double-from (fn [x] (type x)))
+(defmulti double-from
+  "Returns an double value converted from `x`, or nil if `x` can not to be converted to an double value."
+  (fn [x] (type x)))
 (defmethod double-from :default [x]
   (double x))
 (defmethod double-from nil [x]

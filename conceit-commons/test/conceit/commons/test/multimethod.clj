@@ -1,5 +1,5 @@
 (ns conceit.commons.test.multimethod
-  (use conceit.commons.multimethod
+  (use conceit.commons
        conceit.commons.test
        clojure.test))
 

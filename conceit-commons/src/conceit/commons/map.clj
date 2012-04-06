@@ -1,4 +1,5 @@
-(ns conceit.commons.map)
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
 (defn apply-with-map [f & args]
   (apply f (concat (butlast args)

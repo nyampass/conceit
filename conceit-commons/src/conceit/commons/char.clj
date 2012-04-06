@@ -1,5 +1,5 @@
-(ns conceit.commons.char
-  "Utilities about character.")
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
 (defn char-range
   "Returns a lazy seq of characters start to end, by step, where step defaults to 1. An lazy seq includes both start and end."

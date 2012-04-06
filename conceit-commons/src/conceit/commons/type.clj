@@ -1,4 +1,5 @@
-(ns conceit.commons.type)
+(in-ns 'conceit.commons)
+(clojure.core/use 'clojure.core)
 
 (defn derive* [hierarchy & child-parent-pairs]
   (reduce (fn [hierarchy [child parent]]

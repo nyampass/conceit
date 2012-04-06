@@ -1,5 +1,5 @@
 (ns conceit.commons.test.http
-  (use conceit.commons.http
+  (use conceit.commons
        conceit.commons.test
        clojure.test))
 

@@ -1,5 +1,5 @@
 (ns conceit.commons.test.date
-  (use conceit.commons.date
+  (use conceit.commons
        conceit.commons.test
        clojure.test)
   (import [java.util Date Calendar TimeZone]))
