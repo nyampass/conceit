@@ -6,12 +6,12 @@
      ~@body
      return-value#))
 
-(defmacro def-?arrow-macro [name base-macro]
-  (let [val-sym (gensym :val)]
-    `(defmacro ~name [init# & cond-and-forms#]
-       (if (empty? cond-and-forms#)
-         init#
-         `(~'~name (if ~(first cond-and-forms#) (~'~base-macro ~init# ~(second cond-and-forms#)) ~init#) ~@(nnext cond-and-forms#))))))
+(defmacro ?-> [arg & cond-and-forms]
+  (if (empty? cond-and-forms)
+    arg
+    `(?-> (if ~(first cond-and-forms) (-> ~arg ~(second cond-and-forms)) ~arg) ~@(nnext cond-and-forms))))
 
-(def-?arrow-macro ?-> ->)
-(def-?arrow-macro ?->> ->>)
+(defmacro ?->> [arg & cond-and-forms]
+  (if (empty? cond-and-forms)
+    arg
+    `(?->> (if ~(first cond-and-forms) (->> ~arg ~(second cond-and-forms)) ~arg) ~@(nnext cond-and-forms))))
