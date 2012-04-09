@@ -55,4 +55,20 @@
   (= 100 (in-range 300 :min 0 :max 100))
   (= 55 (in-range 55 :min 0 :max 100)))
 
+(deftest* in-range?-test
+  (= true (in-range? 10))
+  (= true (in-range? 0))
+  (= true (in-range? 10 :max 20))
+  (= true (in-range? -2 :max 5))
+  (= true (in-range? 3 :min -20))
+  (= true (in-range? 50 :min 8))
+  (= true (in-range? 20 :min 10 :max 30))
+  (= true (in-range? 0 :min -4 :max 4))
+  (= false (in-range? 10 :max 5))
+  (= false (in-range? 50 :max -20))
+  (= false (in-range? 5 :min 10))
+  (= false (in-range? 100 :min 200))
+  (= false (in-range? 10 :min 20 :max 50))
+  (= false (in-range? 60 :min 40 :max 50)))
+
 ;; (run-tests)

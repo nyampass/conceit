@@ -29,3 +29,7 @@
   (cond (and min (> min n)) min
         (and max (< max n)) max
         :else n))
+
+(defn in-range? [n & {:keys [min max]}]
+  (boolean (and (or (not min) (<= min n))
+                (or (not max) (>= max n)))))
