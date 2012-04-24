@@ -14,4 +14,8 @@
   (= "d6f644b19812e97b5d871658d6d3400ecd4787faeb9b8990c1e7608288664be77257104a58d033bcf1a0e0945ff06468ebe53e2dff36e248424c7273117dac09" (hex-digest "SHA-512" "aaa"))
   (= "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e" (hex-digest "SHA-512" "")))
 
+(deftest* hex-mac-digest-test
+  (= "750c783e6ab0b503eaa86e310a5db738" (hex-mac-digest "Jefe" "HmacMD5" "what do ya want for nothing?"))
+  (= "effcdf6ae5eb2fa2d27416d5f184df9c259a7c79" (hex-mac-digest "Jefe" "HmacSHA1" "what do ya want for nothing?")))
+
 ;; (run-tests)

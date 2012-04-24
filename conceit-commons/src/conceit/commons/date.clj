@@ -1,10 +1,10 @@
 (in-ns 'conceit.commons)
 (clojure.core/use 'clojure.core)
 (require '[clojure
-          [string :as string]])
+           [string :as string]])
 (import [java.util Date Calendar TimeZone]
         [java.text SimpleDateFormat])
-           
+
 (defn default-timezone []
   (TimeZone/getDefault))
 
