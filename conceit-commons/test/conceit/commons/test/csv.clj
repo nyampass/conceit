@@ -26,6 +26,11 @@
   (= "\r\n\r\n" (csv-rows [[] []]))
   (= "" (csv-rows [])))
 
+(deftest* csv-row-by-map-test
+  (= "\"John\",\"24\",\"foo\"\"bar\"" (csv-row-by-map {:name "John" :age 24 :note "foo\"bar"} [:name :age :note]))
+  (= "\"a\"" (csv-row-by-map {:name :a :value 10} [:name]))
+  (= "" (csv-row-by-map {:name :foo} [])))
+
 (deftest* csv-rows-by-maps-test
   (= "\"John\",\"24\",\"foo\"\"bar\"\r\n\"James\",\"30\",\"aaa,bbb,ccc\"\r\n" (csv-rows-by-maps [{:name "John" :age 24 :note "foo\"bar"} {:name "James" :age 30 :note "aaa,bbb,ccc"}] [:name :age :note]))
   (= "\"a\"\r\n\"b\"\r\n\"c\"\r\n" (csv-rows-by-maps [{:name :a :value 10} {:name :b :value 20} {:name :c :value 30}] [:name]))

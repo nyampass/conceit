@@ -10,5 +10,8 @@
 (defn csv-rows [values-seq]
   (apply str (concat (map #(str (csv-row %) "\r\n") values-seq))))
 
+(defn csv-row-by-map [map keys]
+  (csv-row (reduce (fn [values key] (conj values (get map key))) [] keys)))
+
 (defn csv-rows-by-maps [maps keys]
   (csv-rows (map #(reduce (fn [values key] (conj values (get % key))) [] keys) maps)))
