@@ -9,7 +9,9 @@
 ;; a01/x10
 ;; a01/x11
 ;; a02/
+;; a02/x10
 ;; b01/
+;; b01/x10
 ;; b02/
 ;; b02/x10
 ;; c01/
@@ -24,8 +26,8 @@
 
 (deftest* recursive-children-test
   (= [(file "./test/test-directory/a01") (file "./test/test-directory/a01/x10") (file "./test/test-directory/a01/x11")
-      (file "./test/test-directory/a02")
-      (file "./test/test-directory/b01")
+      (file "./test/test-directory/a02") (file "./test/test-directory/a02/x10")
+      (file "./test/test-directory/b01") (file "./test/test-directory/b01/x10")
       (file "./test/test-directory/b02") (file "./test/test-directory/b02/x10")
       (file "./test/test-directory/c01") (file "./test/test-directory/c01/x10")
       (file "./test/test-directory/c02") (file "./test/test-directory/c02/x10") (file "./test/test-directory/c02/x11") (file "./test/test-directory/c02/x12")
@@ -34,7 +36,7 @@
       (file "./test/test-directory/test03")]
      (vec (recursive-children (file "./test/test-directory"))))
   (= [(file "./test/test-directory/a01/x10") (file "./test/test-directory/a01/x11")] (vec (recursive-children (file "./test/test-directory/a01"))))
-  (nil? (recursive-children (file "./test/test-directory/b01")))
+  (nil? (recursive-children (file "./test/test-directory/test01")))
   (= [(file "./test/test-directory/a01")
       (file "./test/test-directory/a02")
       (file "./test/test-directory/b01")
