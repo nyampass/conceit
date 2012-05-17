@@ -1,4 +1,4 @@
-(defproject conceit/conceit-commons "1.0.8"
+(defproject conceit/conceit-commons "1.0.9"
   :description "Common libraries for Clojure."
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [javax.mail/mail "1.4.3"]

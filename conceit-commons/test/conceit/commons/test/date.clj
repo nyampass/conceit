@@ -189,4 +189,11 @@
   (= "2018.07.22" (simple-date-format "yyyy.MM.dd" (date 2018 7 22)))
   (= "2011/4/6 12:34:56" (simple-date-format "yyyy/M/d hh:mm:ss" (date 2011 4 6 12 34 56))))
 
+(deftest* rfc3339-format-test
+  (TimeZone/setDefault (timezone "GMT"))
+  (= "2018-07-01T10:20:30.123Z" (rfc3339-format (date 2018 7 1 10 20 30 123)))
+  (= "1999-11-25T03:02:01.002Z" (rfc3339-format (date 1999 11 25 3 2 1 2)))
+  (TimeZone/setDefault (timezone "Asia/Tokyo"))
+  (= "2003-01-28T06:18:44.514+0900" (rfc3339-format (date 2003 1 28 6 18 44 514))))
+
 ;; (run-tests)

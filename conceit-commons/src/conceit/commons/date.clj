@@ -107,3 +107,7 @@
 
 (defn simple-date-format [pattern date]
   (.format (SimpleDateFormat. pattern) date))
+
+(defn rfc3339-format [date]
+  (let [offset (simple-date-format "Z" date)]
+    (str (simple-date-format "yyyy-MM-dd'T'HH:mm:ss.SSS" date) (if (= "+0000" offset) "Z" offset))))
