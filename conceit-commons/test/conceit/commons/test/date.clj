@@ -196,4 +196,13 @@
   (TimeZone/setDefault (timezone "Asia/Tokyo"))
   (= "2003-01-28T06:18:44.514+0900" (rfc3339-format (date 2003 1 28 6 18 44 514))))
 
+(deftest* date-from-rfc3339-format-test
+  (TimeZone/setDefault (timezone "GMT"))
+  (= (date 2018 7 1 10 20 30 123) (date-from-rfc3339-format "2018-07-01T10:20:30.123Z"))
+  (= (date 1999 11 25 3 2 1 2) (date-from-rfc3339-format "1999-11-25T03:02:01.002Z"))
+  (= (date 2001 1 2 3 4 5 0) (date-from-rfc3339-format "2001-01-02T03:04:05Z"))
+  (= (date 1985 2 15 3 10 20 555) (date-from-rfc3339-format "1985-02-15T12:10:20.555+0900"))
+  (= (date 2010 10 20 5 18 42 0) (date-from-rfc3339-format "2010-10-20T14:18:42+0900"))
+  (= (date 2018 7 1 10 20 30 123) (date-from-rfc3339-format "2018-07-01t10:20:30.123z")))
+
 ;; (run-tests)

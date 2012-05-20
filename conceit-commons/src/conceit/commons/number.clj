@@ -1,5 +1,6 @@
 (in-ns 'conceit.commons)
 (clojure.core/use 'clojure.core)
+(load "commons/flow")
 
 (defmulti int-from
   "Returns an integer value converted from `x`, or nil if `x` can not to be converted to an integer value."
@@ -11,8 +12,7 @@
 (defmethod int-from nil [x]
   nil)
 (defmethod int-from String [s]
-  (try (Long/parseLong s)
-       (catch Exception _ nil)))
+  (ignore-exceptions (Long/parseLong s)))
 
 (defmulti double-from
   "Returns an double value converted from `x`, or nil if `x` can not to be converted to an double value."
@@ -22,8 +22,7 @@
 (defmethod double-from nil [x]
   nil)
 (defmethod double-from String [s]
-  (try (Double/parseDouble s)
-       (catch Exception _ nil)))
+  (ignore-exceptions (Double/parseDouble s)))
 
 (defn in-range [n & {:keys [min max]}]
   (cond (and min (> min n)) min

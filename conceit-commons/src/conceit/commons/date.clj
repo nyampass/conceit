@@ -1,5 +1,7 @@
 (in-ns 'conceit.commons)
 (clojure.core/use 'clojure.core)
+(load "commons/flow")
+(load "commons/number")
 (require '[clojure
            [string :as string]])
 (import [java.util Date Calendar TimeZone]
@@ -111,3 +113,7 @@
 (defn rfc3339-format [date]
   (let [offset (simple-date-format "Z" date)]
     (str (simple-date-format "yyyy-MM-dd'T'HH:mm:ss.SSS" date) (if (= "+0000" offset) "Z" offset))))
+
+(defn date-from-rfc3339-format [s]
+  (when-let [[year month day hour minute sec _ millisec offset] (rest (first (re-seq #"^(\d{4})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(\.(\d{3}))?(.+)$" s)))]
+    (ignore-exceptions (date (int-from year) (int-from month) (int-from day) (int-from hour) (int-from minute) (int-from sec) (if millisec (int-from millisec) 0) (timezone (str "GMT" (if (and offset (= "Z" (.toUpperCase offset))) "" offset)))))))

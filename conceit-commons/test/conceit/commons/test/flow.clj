@@ -64,4 +64,9 @@
   (= 10 (let [x 5] (?->> (* 2 x)
                          (= x 6) (let [x 10])))))
 
+(deftest* ignore-exceptions-test
+  (nil? (ignore-exceptions (throw (Exception. ""))))
+  (nil? (ignore-exceptions (+ nil nil)))
+  (= 10 (ignore-exceptions (+ 5 5))))
+
 ;; (run-tests)

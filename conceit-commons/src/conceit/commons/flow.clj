@@ -15,3 +15,7 @@
   (if (empty? cond-and-forms)
     arg
     `(?->> (if ~(first cond-and-forms) (->> ~arg ~(second cond-and-forms)) ~arg) ~@(nnext cond-and-forms))))
+
+(defmacro ignore-exceptions [& body]
+  `(try (do ~@body)
+        (catch Exception _# nil)))
