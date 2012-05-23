@@ -56,6 +56,12 @@
                                                             (string/split pair #"="))) ["name=Jack" "age=23"]))
   (= {} (map-to-map #(fn [n] [n (* n n)]) [])))
 
+(deftest* make-map-with-keys-by-test
+  (= {"Jack" {:name "Jack" :age 23} "Mike" {:name "Mike" :age 19}} (make-map-with-keys-by :name [{:name "Jack" :age 23} {:name "Mike" :age 19}]))
+  (= {23 {:name "Jack" :age 23} 19 {:name "Mike" :age 19}} (make-map-with-keys-by :age [{:name "Jack" :age 23} {:name "Mike" :age 19}]))
+  (= {13 [10 3] 5 [2 3] 40 [18 22]} (make-map-with-keys-by #(apply + %) [[10 3] [2 3] [18 22]]))
+  (= {} (make-map-with-keys-by :name [])))
+
 (deftest* map-map-test
   (= {:a 2 :b 4 :c 6} (map-map #(* 2 %) {:a 1 :b 2 :c 3}))
   (= {10 20 20 30} (map-map #(+ 10 %) {10 10 20 20}))

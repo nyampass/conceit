@@ -23,6 +23,9 @@
 (defn map-to-map [f seq]
   (map-from-pairs (map f seq)))
 
+(defn make-map-with-keys-by [f seq]
+  (map-to-map #(vector (f %) %) seq))
+
 (defn map-map [f map]
   (map-to-map (fn [[key val]] [key (f val)]) map))
 
