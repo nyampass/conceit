@@ -1,6 +1,5 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
-(load "commons/flow")
+(ns conceit.commons.number
+  (use conceit.commons.flow))
 
 (defmulti int-from
   "Returns an integer value converted from `x`, or nil if `x` can not to be converted to an integer value."

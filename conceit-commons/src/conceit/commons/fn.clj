@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.fn)
 
 (defn apply-repeatedly
   "Returns a value applied the function `f` `times` times."

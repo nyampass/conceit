@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.coll)
 
 (defn get-some [coll & keys]
   "Returns a value mapped some keys, or nil if any keys are not present."

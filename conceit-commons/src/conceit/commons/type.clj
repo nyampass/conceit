@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.type)
 
 (def ^{:private true} primitive-array-types (into {} (map (fn [[name f]] [name (type (f 0))])
                                                           {:boolean boolean-array

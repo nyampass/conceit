@@ -1,11 +1,9 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
-(load "commons/flow")
-(load "commons/number")
-(require '[clojure
-           [string :as string]])
-(import [java.util Date Calendar TimeZone]
-        [java.text SimpleDateFormat])
+(ns conceit.commons.date
+  (use [conceit.commons flow number])
+  (require [clojure
+            [string :as string]])
+  (import [java.util Date Calendar TimeZone]
+          [java.text SimpleDateFormat]))
 
 (defn default-timezone []
   (TimeZone/getDefault))

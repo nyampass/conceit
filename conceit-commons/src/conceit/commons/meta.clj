@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.meta)
 
 (defn assoc-meta [obj & kvs]
   (apply vary-meta obj assoc kvs))

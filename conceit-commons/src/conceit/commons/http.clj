@@ -1,11 +1,8 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
-(require '[clojure
-           [string :as clj.string]])
-(import [java.net URLDecoder URLEncoder])
-(load "commons/map")
-(load "commons/string")
-(load "commons/number")
+(ns conceit.commons.http
+  (use [conceit.commons map string number])
+  (require [clojure
+            [string :as clj.string]])
+  (import [java.net URLDecoder URLEncoder]))
 
 (defn parse-query-string
   ([s text-encoding]

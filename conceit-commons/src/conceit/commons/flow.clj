@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.flow)
 
 (defmacro do0 [return-value & body]
   `(let [return-value# ~return-value]

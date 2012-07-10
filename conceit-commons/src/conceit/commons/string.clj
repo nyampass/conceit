@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.string)
 
 (defn non-empty-string?
   "Returns true if `s` is string and not empty otherwise false."

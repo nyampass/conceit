@@ -1,5 +1,4 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
+(ns conceit.commons.assert)
 
 (defmacro assert-multi
   "Asserts multiple values."

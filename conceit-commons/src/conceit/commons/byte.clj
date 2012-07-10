@@ -1,6 +1,5 @@
-(in-ns 'conceit.commons)
-(clojure.core/use 'clojure.core)
-(load "commons/type")
+(ns conceit.commons.byte
+  (use conceit.commons.type))
 
 (defmulti bytes-from
   "Returns an array of bytes converted from `x`, or nil if `x` can not to be converted to an array of bytes."
