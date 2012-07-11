@@ -27,6 +27,13 @@
   (map? {})
   (vector? [])
   ;; 20
+  (.isEmpty "")
+  (.isNaN Double/NaN)
+  (Character/isDigit \3)
+  (Double/isNaN Double/NaN)
+  (.equals "Foo" "Foo")
+  (.equals 10 10)
+  ;; 26
   (let [x 10]
     (= x 10)
     (= 20 (* x 2)))
@@ -42,7 +49,7 @@
   (when-first [x [1 2 3]]
     (= x 1)
     (= 5 (* 5 x)))
-  ;; 30
+  ;; 36
   (if true
     (= 5 (+ 3 2))
     (= 6 (+ 3 2))) ;; will not be evaluated
@@ -61,10 +68,13 @@
   (do
     (string? "foobar")
     (not-empty "foobar")
-    (map? {:a 10 :b 20}))
+    (map? {:a 10 :b 20})
+    (.isNaN Double/NaN)
+    (.equals "foobar" "foobar")
+    (Character/isDigit \6))
   (doseq [n [1 2 3]]
     (number? n))
-  ;; 41
+  ;; 50
   (dotimes [n 3]
     (not (neg? n)))
   (binding [dynamic-var 20]
@@ -80,7 +90,7 @@
     (= 40 @a)
     (var-set b 50)
     (= 50 @b))
-  ;; 52
+  ;; 61
   (with-open [s (java.io.ByteArrayInputStream. (.getBytes "foo"))]
     (= (int \f) (.read s))
     (= (int \o) (.read s)))
@@ -94,7 +104,57 @@
   true
   (let [x 10]
     x)
-  ;; 60
+  ;; 69
+  )
+
+(defn odd-p [x]
+  (odd? x))
+
+(defn even-p [x]
+  (even? x))
+
+(set-auto-assertion-predicate odd-p)
+(set-auto-assertion-predicate even-p)
+
+(deftest* set-auto-assertion-predicate-test
+  (odd-p 3)
+  (even-p 10)
+  (do (odd-p 7)
+      (even-p 14))
+  (let [a 11]
+    (odd-p a)
+    (even-p (* 2 a)))
+  ;; 6
+  )
+
+(defmacro my-do [& body]
+  `(do ~@body))
+
+(defmacro my-let [bindings & body]
+  `(let [~@bindings] ~@body))
+
+(defmacro with-x-y [x-val y-val & body]
+  `(let [~'x ~x-val ~'y ~y-val] ~@body))
+
+(set-auto-assertion-block my-do 0)
+(set-auto-assertion-block my-let 1)
+(set-auto-assertion-block with-x-y 2)
+
+(deftest* set-auto-assertion-block-test
+  (my-do
+   (= 10 (* 2 5))
+   (nil? nil)
+   (.isEmpty ""))
+  (my-let [x 10]
+          (= 10 x)
+          (nil? nil)
+          (.isNaN Double/NaN))
+  (with-x-y 2 4
+    (= 2 x)
+    (= 4 y)
+    (nil? nil)
+    (Character/isDigit \7))
+  ;; 10
   )
 
 ;; (run-tests)

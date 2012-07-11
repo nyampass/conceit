@@ -69,6 +69,8 @@
   (nil? (ignore-exceptions (+ nil nil)))
   (= 10 (ignore-exceptions (+ 5 5))))
 
+(set-auto-assertion-block when-let* 1)
+
 (deftest* when-let*-test
   (= 11
      (when-let* [x (+ 5 6)] x))
@@ -95,9 +97,9 @@
   (when-let* [x 10
               y 20
               z 30]
-             (is (= 10 x))
-             (is (= 20 y))
-             (is (= 30 z)))
+             (= 10 x)
+             (= 20 y)
+             (= 30 z))
   (testing "short circuit"
     (with-local-vars [a :unmodified]
       (= [10 20] (when-let* [x 10
@@ -124,6 +126,8 @@
                        [x y]))
       (= :modified @a))))
 
+(set-auto-assertion-block if-let* 1)
+
 (deftest* if-let*-test
   (= 11 (if-let* [x (+ 5 6)] x 0))
   (= [30 150] (if-let* [a (+ 10 20)
@@ -144,6 +148,9 @@
              (if-let* [a 1 b (* 2 a)]
                       [a b]
                       [0 0])))
+  (if-let* [x 10 y 20]
+           (= 30 (+ x y))
+           (is nil "Unexpected."))
   (testing "short circuit"
     (with-local-vars [a :unmodified]
       (= [10 20] (if-let* [x 10
