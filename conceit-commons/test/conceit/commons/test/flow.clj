@@ -69,4 +69,126 @@
   (nil? (ignore-exceptions (+ nil nil)))
   (= 10 (ignore-exceptions (+ 5 5))))
 
+(deftest* when-let*-test
+  (= 11
+     (when-let* [x (+ 5 6)] x))
+  (= [30 150]
+     (when-let* [a (+ 10 20)
+                 b (* a 5)]
+                [a b]))
+  (= [5 8 20] (when-let* [base 5
+                          height 8
+                          area (/ (* base height) 2)]
+                         [base height area]))
+  (= 30 (when-let* [] 30))
+  (nil? (when-let* [x nil] 40))
+  (nil? (when-let* [a 20
+                    b nil]
+                   100))
+  (nil? (when-let* [a nil b nil]
+                   200))
+  (nil? (when-let* [a nil b 30]
+                   300))
+  (= [1 2] (let [a 10 b 20]
+             (when-let* [a 1 b (* 2 a)]
+                        [a b])))
+  (when-let* [x 10
+              y 20
+              z 30]
+             (is (= 10 x))
+             (is (= 20 y))
+             (is (= 30 z)))
+  (testing "short circuit"
+    (with-local-vars [a :unmodified]
+      (= [10 20] (when-let* [x 10
+                             y (do (var-set a :modified)
+                                   20)]
+                            [x y]))
+      (= :modified @a))
+    (with-local-vars [a :unmodified]
+      (nil? (when-let* [x nil
+                        y (do (var-set a :modified)
+                              20)]
+                       [x y]))
+      (= :unmodified @a))
+    (with-local-vars [a :unmodified]
+      (nil? (when-let* [x (do (var-set a :modified)
+                              10)
+                        y nil]
+                       [x y]))
+      (= :modified @a))
+    (with-local-vars [a :unmodified]
+      (nil? (when-let* [x 10
+                        y (do (var-set a :modified)
+                              nil)]
+                       [x y]))
+      (= :modified @a))))
+
+(deftest* if-let*-test
+  (= 11 (if-let* [x (+ 5 6)] x 0))
+  (= [30 150] (if-let* [a (+ 10 20)
+                        b (* a 5)]
+                       [a b]
+                       [0 0]))
+  (= [5 8 20] (if-let* [base 5
+                        height 8
+                        area (/ (* base height) 2)]
+                       [base height area]
+                       [0 0 0]))
+  (= 30 (if-let* [] 30 10))
+  (= 2 (if-let* [x nil] 1 2))
+  (= [0 0] (if-let* [a 1 b nil] [a b] [0 0]))
+  (= [1 1] (if-let* [a nil b nil] [a b] [1 1]))
+  (= [2 2] (if-let* [a nil b 2] [a b] [2 2]))
+  (= [1 2] (let [a 10 b 20]
+             (if-let* [a 1 b (* 2 a)]
+                      [a b]
+                      [0 0])))
+  (testing "short circuit"
+    (with-local-vars [a :unmodified]
+      (= [10 20] (if-let* [x 10
+                           y (do (var-set a :modified)
+                                 20)]
+                          [x y]
+                          [1 2]))
+      (= :modified @a))
+    (with-local-vars [a :unmodified]
+      (= [1 2] (if-let* [x nil
+                         y (do (var-set a :modified)
+                               20)]
+                        [x y]
+                        [1 2]))
+      (= :unmodified @a))
+    (with-local-vars [a :unmodified]
+      (= [1 2] (if-let* [x (do (var-set a :modified)
+                               10)
+                         y nil]
+                        [x y]
+                        [1 2]))
+      (= :modified @a))
+    (with-local-vars [a :unmodified]
+      (= [1 2] (if-let* [x 10
+                         y (do (var-set a :modified)
+                               nil)]
+                        [x y]
+                        [1 2]))
+      (= :modified @a)))
+  (testing "binding"
+    (let [x 10 y 20 z 30]
+      (= [:then 1 2 3] (if-let* [x 1 y 2 z 3]
+                                [:then x y z]
+                                [:else x y z]))
+      (= [:else 10 20 30] (if-let* [x nil y nil z nil]
+                                   [:then x y z]
+                                   [:else x y z]))
+      (= [:else 10 20 30] (if-let* [x 1 y 2 z nil]
+                                   [:then x y z]
+                                   [:else x y z]))
+      (= [:else 10 20 30] (if-let* [x 1 y nil z 3]
+                                   [:then x y z]
+                                   [:else x y z]))
+      (= [:else 10 20 30] (if-let* [x nil y 2 z 3]
+                                   [:then x y z]
+                                   [:else x y z])))))
+
 ;; (run-tests)
