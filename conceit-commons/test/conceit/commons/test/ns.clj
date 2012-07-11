@@ -5,13 +5,13 @@
   (require conceit.commons.test.ns.sample1
            conceit.commons.test.ns.sample2))
 
-(intern-with-var *ns* 'test-fn #'conceit.commons.test.ns.sample1/sample1-fn)
-(intern-with-var *ns* 'test-value #'conceit.commons.test.ns.sample1/sample1-value)
-(intern-with-var *ns* 'test-once #'conceit.commons.test.ns.sample1/sample1-once)
-(intern-with-var *ns* 'test-struct #'conceit.commons.test.ns.sample1/sample1-struct)
-(intern-with-var *ns* 'test-macro #'conceit.commons.test.ns.sample1/sample1-macro)
+(intern-from-var *ns* 'test-fn #'conceit.commons.test.ns.sample1/sample1-fn)
+(intern-from-var *ns* 'test-value #'conceit.commons.test.ns.sample1/sample1-value)
+(intern-from-var *ns* 'test-once #'conceit.commons.test.ns.sample1/sample1-once)
+(intern-from-var *ns* 'test-struct #'conceit.commons.test.ns.sample1/sample1-struct)
+(intern-from-var *ns* 'test-macro #'conceit.commons.test.ns.sample1/sample1-macro)
 
-(deftest* intern-with-var-test
+(deftest* intern-from-var-test
   (= [:sample1-fn 200] (test-fn 200))
   (= 42 test-value)
   (= 123 test-once)
