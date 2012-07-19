@@ -43,22 +43,16 @@
 (defmacro set-auto-assertion-block [sym arg-count-ignored]
   `(defmethod ~`arg-count-ignored-of-auto-assertion-block '~sym [sym#] ~arg-count-ignored))
 
-(defmulti ^{:private true} convert-with-assertion (fn [form]
-                                                    (if (list? form)
-                                                      (first form)
-                                                      ::not-list))
-  :default ::default)
-
-(defmethod convert-with-assertion ::default [form]
-  (let [[first & body] form]
-    (if (auto-assertion-predicate? first)
+(defn convert-with-assertion [form]
+  (with-meta
+    (if (or (not (list? form))
+            (auto-assertion-predicate? (first form)))
       `(is ~form)
-      (if-let [arg-count-ignored (arg-count-ignored-of-auto-assertion-block first)]
-        `(~first ~@(take arg-count-ignored body) ~@(map convert-with-assertion (drop arg-count-ignored body)))
-        form))))
-
-(defmethod convert-with-assertion ::not-list [form]
-  `(is ~form))
+      (let [[first & body] form]
+        (if-let [arg-count-ignored (arg-count-ignored-of-auto-assertion-block first)]
+          `(~first ~@(take arg-count-ignored body) ~@(map convert-with-assertion (drop arg-count-ignored body)))
+          form)))
+    (meta form)))
 
 (defmacro deftest* [name & body]
   `(deftest ~name ~@(map convert-with-assertion body)))
