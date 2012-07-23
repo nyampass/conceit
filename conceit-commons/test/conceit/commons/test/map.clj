@@ -67,6 +67,11 @@
   (= {10 20 20 30} (map-map #(+ 10 %) {10 10 20 20}))
   (= {} (map-map #(+ 10 %) [])))
 
+(deftest* map-map-keys-test
+  (= {:x-a 1 :x-b 2 :x-c 3} (map-map-keys #(keyword (str "x-" (name %))) {:a 1 :b 2 :c 3}))
+  (= {10 :one 20 :two} (map-map-keys #(* 10 %) {1 :one 2 :two}))
+  (= {} (map-map-keys #(symbol (str "x-" (name %))) {})))
+
 (deftest* deep-merge-test
   (= {:a 10 :b 20 :c 30} (deep-merge {:a 10 :b 10} {:b 20 :c 30}))
   (= {:a {:a-a 10 :a-b 20}} (deep-merge {:a {:a-a 10}} {:a {:a-b 20}}))

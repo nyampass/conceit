@@ -28,6 +28,9 @@
 (defn map-map [f map]
   (map-to-map (fn [[key val]] [key (f val)]) map))
 
+(defn map-map-keys [f map]
+  (map-to-map (fn [[key val]] [(f key) val]) map))
+
 (defn deep-merge [& maps]
   (apply merge-with (fn [val1 val2]
                       (if (and (map? val1) (map? val2))
