@@ -1,7 +1,7 @@
 (ns conceit.commons
   (require conceit.commons.ns))
 
-(def ^{:private true} sub-namespaces '#{type assert class fn map number string char byte coll date flow http meta multimethod regex ns})
+(def ^{:private true} sub-namespaces '#{type assert class fn map number string char byte coll date flow http meta multimethod regex ns named})
 
 (doseq [sub-ns sub-namespaces]
   (let [sub-ns-full (symbol (str (name (ns-name *ns*)) "." (name sub-ns)))]
