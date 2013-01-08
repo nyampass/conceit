@@ -1,5 +1,8 @@
 (ns conceit.commons.coll)
 
+(defn flatten-1 [coll]
+  (apply concat coll))
+
 (defn get-some [coll & keys]
   "Returns a value mapped some keys, or nil if any keys are not present."
   (some #(get coll %) keys))

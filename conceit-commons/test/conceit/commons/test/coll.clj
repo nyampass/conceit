@@ -3,6 +3,15 @@
        conceit.commons.test
        clojure.test))
 
+(deftest* flatten-1-test
+  (= [1 2 3] (flatten-1 [[1] [2] [3]]))
+  (= [1 2 3 4] (flatten-1 [[1 2] [3 4]]))
+  (= [[1] [2] [3 4]] (flatten-1 [[[1] [2]] [[3 4]]]))
+  (= [] (flatten-1 [[] [] []]))
+  (= [[] []] (flatten-1 [[[] []] []]))
+  (= [] (flatten-1 []))
+  (= [] (flatten-1 nil)))
+
 (deftest* get-some-test
   (= 10 (get-some {:a 10 :b 20 :c 30} :a :b))
   (= 20 (get-some {:a 10 :b 20 :c 30} :d :b :c))
