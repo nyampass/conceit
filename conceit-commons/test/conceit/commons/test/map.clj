@@ -23,7 +23,8 @@
   (= {} (filter-map #(> % 10) {:two 2 :three 3 :five 5 :nine 9 :one 1}))
   (= {:foo 42 :bar "BAR"} (filter-map identity {:hoge nil :foo 42 :bar "BAR" :piyo nil}))
   (= {1 "ONE" 2 "TWO" 3 "THREE"} (filter-map identity {1 "ONE" 2 "TWO" 3 "THREE"}))
-  (= {} (filter-map odd? {})))
+  (= {} (filter-map odd? {}))
+  (= {:foo 1} (meta (filter-map odd? (with-meta {:a 1 :b 2 :c 3} {:foo 1})))))
 
 (deftest* filter-map-by-key-test
   (= {1 :a 3 :c 5 :e} (filter-map-by-key odd? {1 :a 2 :b 3 :c 4 :d 5 :e}))
@@ -31,7 +32,8 @@
   (= {} (filter-map-by-key #(> % 10) {2 :two 3 :three 5 :five 9 :nine 1 :one}))
   (= {42 :foo "BAR" :bar} (filter-map-by-key identity {nil :hoge 42 :foo "BAR" :bar false :piyo}))
   (= {"ONE" 1 "TWO" 2 "THREE" 3} (filter-map-by-key identity {"ONE" 1 "TWO" 2 "THREE" 3}))
-  (= {} (filter-map-by-key odd? {})))
+  (= {} (filter-map-by-key odd? {}))
+  (= {:foo 1} (meta (filter-map-by-key odd? (with-meta {1 :a 2 :b 3 :c} {:foo 1})))))
 
 (deftest* remove-map-test
   (= {:a 1 :c 3 :e 5} (remove-map even? {:a 1 :b 2 :c 3 :d 4 :e 5}))
@@ -39,7 +41,8 @@
   (= {} (remove-map #(< % 10) {:two 2 :three 3 :five 5 :nine 9 :one 1}))
   (= {:foo 42 :bar "BAR"} (remove-map nil? {:hoge nil :foo 42 :bar "BAR" :piyo nil}))
   (= {1 "ONE" 2 "TWO" 3 "THREE"} (remove-map nil? {1 "ONE" 2 "TWO" 3 "THREE"}))
-  (= {} (remove-map identity {})))
+  (= {} (remove-map identity {}))
+  (= {:foo 1} (meta (remove-map odd? (with-meta {:a 1 :b 2 :c 3} {:foo 1})))))
 
 (deftest* remove-map-by-key-test
   (= {1 :a 3 :c 5 :e} (remove-map-by-key even? {1 :a 2 :b 3 :c 4 :d 5 :e}))
@@ -47,7 +50,8 @@
   (= {} (remove-map-by-key #(< % 10) {2 :two 3 :three 5 :five 9 :nine 1 :one}))
   (= {42 :foo "BAR" :bar} (remove-map-by-key not {nil :hoge 42 :foo "BAR" :bar false :piyo}))
   (= {"ONE" 1 "TWO" 2 "THREE" 3} (remove-map-by-key nil? {"ONE" 1 "TWO" 2 "THREE" 3}))
-  (= {} (remove-map-by-key identity {})))
+  (= {} (remove-map-by-key identity {}))
+  (= {:foo 1} (meta (remove-map-by-key odd? (with-meta {1 :a 2 :b 3 :c} {:foo 1})))))
 
 (deftest* map-to-map-test
   (= {3 9 4 16 6 36} (map-to-map (fn [n] [n (* n n)]) [3 4 6]))
@@ -89,6 +93,17 @@
                   :b {:b-b 8}}))
   (= {} (deep-merge {} {}))
   (= {:a 3} (deep-merge {:a {:a-a 1 :a-b 2}} {:a 3}))
-  (= {:a 1 :b 2 :c 3} (deep-merge {:a 9 :c 3} {:b 8 :a 1} {:b 2})))
+  (= {:a 1 :b 2 :c 3} (deep-merge {:a 9 :c 3} {:b 8 :a 1} {:b 2}))
+  (= {:foo 1} (meta (deep-merge (with-meta {:a 9 :c 3} {:foo 1}) {:b 8 :a 1}))))
+
+(deftest* keep-keys-test
+  (= {:a 1 :c 3} (keep-keys {:a 1 :b 2 :c 3 :d 4} [:a :c]))
+  (= {:a 1} (keep-keys {:a 1 :b 2 :d 4} [:a :c]))
+  (= {:b 2} (keep-keys {:a 1 :b 2 :c 3 :d 4} [:b]))
+  (= {} (keep-keys {:b 2 :d 4} [:a :c]))
+  (= {} (keep-keys {} [:a :b :c]))
+  (= {} (keep-keys {} []))
+  (= {:foo 1} (meta (keep-keys (with-meta {:a 1 :b 2} {:foo 1}) [:a])))
+  (= nil (meta (keep-keys (with-meta {:a 1 :b 2} nil) [:a]))))
 
 ;; (run-tests)

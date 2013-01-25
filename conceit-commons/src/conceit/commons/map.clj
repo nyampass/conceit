@@ -1,4 +1,5 @@
-(ns conceit.commons.map)
+(ns conceit.commons.map
+  (use conceit.commons.meta))
 
 (defn apply-with-map [f & args]
   (apply f (concat (butlast args)
@@ -8,10 +9,16 @@
   (into {} (map (fn [[k v]] [k v]) pairs)))
 
 (defn filter-map [f map]
-  (map-from-pairs (for [[key val :as entry] map :when (f val)] entry)))
+  (reduce (fn [result [key val]]
+            (if (f val) result (dissoc result key)))
+          map
+          map))
 
 (defn filter-map-by-key [f map]
-  (map-from-pairs (for [[key val :as entry] map :when (f key)] entry)))
+  (reduce (fn [result [key val]]
+            (if (f key) result (dissoc result key)))
+          map
+          map))
 
 (defn remove-map [f map]
   (filter-map (complement f) map))
@@ -37,3 +44,10 @@
                         (deep-merge val1 val2)
                         val2))
          maps))
+
+(defn keep-keys [map keys]
+  (keep-meta map (reduce (fn [result key] (if (contains? map key)
+                                            (assoc result key (get map key))
+                                            result))
+                         {}
+                         keys)))
