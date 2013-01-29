@@ -1,5 +1,11 @@
 (ns conceit.commons.coll)
 
+(defn append [coll & vals]
+  (concat coll vals))
+
+(defn prepend [coll & vals]
+  (concat vals coll))
+
 (defn flatten-1 [coll]
   (apply concat coll))
 

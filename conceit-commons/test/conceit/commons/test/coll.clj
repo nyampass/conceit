@@ -3,6 +3,30 @@
        conceit.commons.test
        clojure.test))
 
+(deftest* append-test
+  (= [1 2 3] (append [1 2] 3))
+  (= [1 2 3] (append '(1 2) 3))
+  (= [1 2 3 4] (append [1 2] 3 4))
+  (= [1 2 3 4] (append '(1 2) 3 4))
+  (= [:foo] (append [] :foo))
+  (= [:bar] (append () :bar))
+  (= [:baz] (append nil :baz))
+  (= [:foo :bar] (append [] :foo :bar))
+  (= [:foo :bar] (append () :foo :bar))
+  (= [:foo :bar] (append nil :foo :bar)))
+
+(deftest* prepend-test
+  (= [3 1 2] (prepend [1 2] 3))
+  (= [3 1 2] (prepend '(1 2) 3))
+  (= [3 4 1 2] (prepend [1 2] 3 4))
+  (= [3 4 1 2] (prepend '(1 2) 3 4))
+  (= [:foo] (prepend [] :foo))
+  (= [:bar] (prepend () :bar))
+  (= [:baz] (prepend nil :baz))
+  (= [:foo :bar] (prepend [] :foo :bar))
+  (= [:foo :bar] (prepend () :foo :bar))
+  (= [:foo :bar] (prepend nil :foo :bar)))
+
 (deftest* flatten-1-test
   (= [1 2 3] (flatten-1 [[1] [2] [3]]))
   (= [1 2 3 4] (flatten-1 [[1 2] [3 4]]))
