@@ -71,4 +71,17 @@
   (= false (in-range? 10 :min 20 :max 50))
   (= false (in-range? 60 :min 40 :max 50)))
 
+(deftest* sum-test
+  (= 10 (sum [1 2 3 4]))
+  (= 5050 (sum (range 1 101)))
+  (= 5 (sum [5]))
+  (= 0 (sum []))
+  (= 242 (int (* 10 (sum [12.1 8 4.1])))))
+
+(deftest* average-test
+  (= 3 (average [1 2 3 4 5]))
+  (= 101/2 (average (range 1 101)))
+  (= 5 (average [5]))
+  (= 0 (average [0])))
+
 ;; (run-tests)

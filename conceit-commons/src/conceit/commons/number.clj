@@ -31,3 +31,9 @@
 (defn in-range? [n & {:keys [min max]}]
   (boolean (and (or (not min) (<= min n))
                 (or (not max) (>= max n)))))
+
+(defn sum [coll]
+  (reduce + 0 coll))
+
+(defn average [coll]
+  (/ (sum coll) (count coll)))
