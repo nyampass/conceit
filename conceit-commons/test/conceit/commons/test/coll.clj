@@ -3,6 +3,59 @@
        conceit.commons.test
        clojure.test))
 
+(deftest* third-test
+  (= 103 (third (range 101 200)))
+  (= 'c (third '[a b c d e f g h i j k l m n o]))
+  (nil? (third [1 2]))
+  (nil? (third ())))
+
+(deftest* fourth-test
+  (= 104 (fourth (range 101 200)))
+  (= 'd (fourth '[a b c d e f g h i j k l m n o]))
+  (nil? (fourth [1 2]))
+  (nil? (fourth ())))
+
+(deftest* fifth-test
+  (= 105 (fifth (range 101 200)))
+  (= 'e (fifth '[a b c d e f g h i j k l m n o]))
+  (nil? (fifth [1 2]))
+  (nil? (fifth ())))
+
+(deftest* sixth-test
+  (= 106 (sixth (range 101 200)))
+  (= 'f (sixth '[a b c d e f g h i j k l m n o]))
+  (nil? (sixth [1 2]))
+  (nil? (sixth ())))
+
+(deftest* seventh-test
+  (= 107 (seventh (range 101 200)))
+  (= 'g (seventh '[a b c d e f g h i j k l m n o]))
+  (nil? (seventh [1 2]))
+  (nil? (seventh ())))
+
+(deftest* eighth-test
+  (= 108 (eighth (range 101 200)))
+  (= 'h (eighth '[a b c d e f g h i j k l m n o]))
+  (nil? (eighth [1 2]))
+  (nil? (eighth ())))
+
+(deftest* ninth-test
+  (= 109 (ninth (range 101 200)))
+  (= 'i (ninth '[a b c d e f g h i j k l m n o]))
+  (nil? (ninth [1 2]))
+  (nil? (ninth ())))
+
+(deftest* tenth-test
+  (= 110 (tenth (range 101 200)))
+  (= 'j (tenth '[a b c d e f g h i j k l m n o]))
+  (nil? (tenth [1 2]))
+  (nil? (tenth ())))
+
+(deftest* forty-second-test
+  (= 142 (forty-second (range 101 200)))
+  (nil? (forty-second [1 2]))
+  (nil? (forty-second ())))
+
 (deftest* append-test
   (= [1 2 3] (append [1 2] 3))
   (= [1 2 3] (append '(1 2) 3))

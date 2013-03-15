@@ -1,4 +1,4 @@
-(defproject conceit/conceit-commons "1.0.26"
+(defproject conceit/conceit-commons "1.0.27"
   :description "Common libraries for Clojure."
   :dependencies [[org.clojure/clojure "1.4.0"]]
   :dev-dependencies [[lein-ring "0.4.6"]

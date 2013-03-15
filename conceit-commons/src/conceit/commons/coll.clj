@@ -1,5 +1,21 @@
 (ns conceit.commons.coll)
 
+(defmacro ^{:private true} defnthfn [name n]
+  (let [sym (gensym)]
+    `(do (defn ~name [~sym]
+           (first ~(nth (iterate #(list `next %) sym) (dec n))))
+         (alter-meta! #'~name assoc :arglists '([~'x])))))
+
+(defnthfn third 3)
+(defnthfn fourth 4)
+(defnthfn fifth 5)
+(defnthfn sixth 6)
+(defnthfn seventh 7)
+(defnthfn eighth 8)
+(defnthfn ninth 9)
+(defnthfn tenth 10)
+(defnthfn forty-second 42)
+
 (defn append [coll & vals]
   (concat coll vals))
 
