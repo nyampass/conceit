@@ -56,3 +56,15 @@
 
 (defmacro deftest* [name & body]
   `(deftest ~name ~@(map convert-with-assertion body)))
+
+(defn run-test
+  ([var ns]
+     (binding [*report-counters* (ref *initial-report-counters*)] 
+       (do-report {:type :begin-test-ns :ns ns})
+       (let [once-fixture-fn (join-fixtures (:clojure.test/once-fixtures (meta ns)))
+             each-fixture-fn (join-fixtures (:clojure.test/each-fixtures (meta ns)))]
+         (once-fixture-fn (fn [] (each-fixture-fn (fn [] (test-var var))))))
+       (do-report {:type :end-test-ns :ns ns})
+       (do-report (assoc @*report-counters* :type :summary))))
+  ([var]
+     (run-test var *ns*)))
