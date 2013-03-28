@@ -25,6 +25,12 @@
 (defn flatten-1 [coll]
   (apply concat coll))
 
+(defn contains-in? [coll keys]
+  (loop [coll coll keys keys]
+    (cond (empty? keys) true
+          (and (coll? coll) (contains? coll (first keys))) (recur (get coll (first keys)) (rest keys))
+          :else false)))
+
 (defn get-some [coll & keys]
   "Returns a value mapped some keys, or nil if any keys are not present."
   (some #(get coll %) keys))

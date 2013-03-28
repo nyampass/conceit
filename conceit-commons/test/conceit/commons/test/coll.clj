@@ -89,6 +89,22 @@
   (= [] (flatten-1 []))
   (= [] (flatten-1 nil)))
 
+(deftest* contains-in?-test
+  (true? (contains-in? {:a {:b 1 :c 2}} [:a :b]))
+  (true? (contains-in? {:foo 10 :bar 20 :baz 30} [:foo]))
+  (true? (contains-in? {:foo 1 :bar 2} []))
+  (true? (contains-in? [:foo :bar :baz] [0]))
+  (true? (contains-in? [:foo :bar :baz] [1]))
+  (true? (contains-in? [[:foo :bar] [:hoge :piyo] [:a :b :c]] [1 0]))
+  (true? (contains-in? 100 []))
+  (true? (contains-in? {} []))
+  (true? (contains-in? [] []))
+  (false? (contains-in? {:a {:b {:c 1 :d 2}}} [:a :b :x]))
+  (false? (contains-in? {:a {:b {:c 1 :d 2}}} [:a :y]))
+  (false? (contains-in? {:a {:b {:c 1 :d 2}}} [:b :c]))
+  (false? (contains-in? {} [:a]))
+  (false? (contains-in? [:foo :bar :baz] [5])))
+
 (deftest* get-some-test
   (= 10 (get-some {:a 10 :b 20 :c 30} :a :b))
   (= 20 (get-some {:a 10 :b 20 :c 30} :d :b :c))
