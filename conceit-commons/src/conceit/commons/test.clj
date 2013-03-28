@@ -65,6 +65,8 @@
              each-fixture-fn (join-fixtures (:clojure.test/each-fixtures (meta ns)))]
          (once-fixture-fn (fn [] (each-fixture-fn (fn [] (test-var var))))))
        (do-report {:type :end-test-ns :ns ns})
-       (do-report (assoc @*report-counters* :type :summary))))
+       (let [summary (assoc @*report-counters* :type :summary)]
+         (do-report summary)
+         summary)))
   ([var]
      (run-test var *ns*)))
