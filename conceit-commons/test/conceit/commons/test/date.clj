@@ -179,6 +179,30 @@
   (= (date 1987 4 1 0 0 0 0) (start-of-month (date 1987 4 15 13 22 10 567)))
   (= (date 2011 11 1 0 0 0 0) (start-of-month (date 2011 11 30 23 40 56 998))))
 
+(deftest* date>-test
+  (true? (date> (date 2001 1 2 3 4 5 6) (date 2000 5 4 3 2 1 9)))
+  (true? (date> (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 10 233)))
+  (false? (date> (date 2011 6 9 12 34 56 0) (date 2012 8 7 4 12 33 0)))
+  (false? (date> (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 234))))
+
+(deftest* date<-test
+  (true? (date< (date 2000 5 4 3 2 1 9) (date 2001 1 2 3 4 5 6)))
+  (true? (date< (date 2010 5 18 20 45 10 233) (date 2010 5 18 20 45 10 234)))
+  (false? (date< (date 2012 8 7 4 12 33 0) (date 2011 6 9 12 34 56 0)))
+  (false? (date< (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 10 234))))
+
+(deftest* date>=-test
+  (true? (date>= (date 2001 1 2 3 4 5 6) (date 2000 5 4 3 2 1 9)))
+  (true? (date>= (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 10 233)))
+  (false? (date>= (date 2011 6 9 12 34 56 0) (date 2012 8 7 4 12 33 0)))
+  (true? (date>= (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 10 234))))
+
+(deftest* date<=-test
+  (true? (date<= (date 2000 5 4 3 2 1 9) (date 2001 1 2 3 4 5 6)))
+  (true? (date<= (date 2010 5 18 20 45 10 233) (date 2010 5 18 20 45 10 234)))
+  (false? (date<= (date 2012 8 7 4 12 33 0) (date 2011 6 9 12 34 56 0)))
+  (true? (date<= (date 2010 5 18 20 45 10 234) (date 2010 5 18 20 45 10 234))))
+
 (deftest* now-test
   (let [current-date (Date.)
         now (now)]

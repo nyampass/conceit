@@ -102,6 +102,18 @@
   (start-of-day (.getTime (doto (calendar-from-date date)
                             (.set Calendar/DAY_OF_MONTH 1)))))
 
+(defn date> [date1 date2]
+  (.after date1 date2))
+
+(defn date< [date1 date2]
+  (.before date1 date2))
+
+(defn date>= [date1 date2]
+  (not (date< date1 date2)))
+
+(defn date<= [date1 date2]
+  (not (date> date1 date2)))
+
 (defn now []
   (Date.))
 
