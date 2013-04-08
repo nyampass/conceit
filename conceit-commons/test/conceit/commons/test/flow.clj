@@ -69,8 +69,6 @@
   (nil? (ignore-exceptions (+ nil nil)))
   (= 10 (ignore-exceptions (+ 5 5))))
 
-(set-auto-assertion-block when-let* 1)
-
 (deftest* when-let*-test
   (= 11
      (when-let* [x (+ 5 6)]
@@ -126,8 +124,6 @@
                               nil)]
               [x y]))
       (= :modified @a))))
-
-(set-auto-assertion-block if-let* 1)
 
 (deftest* if-let*-test
   (= 11 (if-let* [x (+ 5 6)] x 0))

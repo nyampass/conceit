@@ -1,7 +1,8 @@
 (ns conceit.commons.test
-  (use clojure.test))
+  (use conceit.commons
+       clojure.test))
 
-(def ^{:private true} auto-assertion-symbols '#{= == < > <= >= not re-seq and or not-empty .equals})
+(def ^{:private true} auto-assertion-symbols '#{= == < > <= >= not re-seq and or not-empty .equals date< date> date<= date>=})
 
 (def ^{:private true} auto-assertion-symbol-regexes #{#"\?$" #"^\.?is[A-Z]"})
 
@@ -32,7 +33,9 @@
                                                                       with-local-vars 1
                                                                       with-open 1
                                                                       letfn 1
-                                                                      testing 1})
+                                                                      testing 1
+                                                                      when-let* 1
+                                                                      if-let* 1})
 
 (defmulti arg-count-ignored-of-auto-assertion-block identity
   :default ::default)
