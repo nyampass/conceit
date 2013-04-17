@@ -12,6 +12,16 @@
   (false? (named? 10))
   (false? (named? nil)))
 
+(deftest* fullname-test
+  (= "foo/bar" (fullname :foo/bar))
+  (= "x/y" (fullname :x/y))
+  (= "foo" (fullname :foo))
+  (= "x" (fullname :x))
+  (= "foo/bar" (fullname 'foo/bar))
+  (= "x/y" (fullname 'x/y))
+  (= "foo" (fullname 'foo))
+  (= "bar" (fullname 'bar)))
+
 (deftest* name-or-str-test
   (= "KEYWORD" (name-or-str :KEYWORD))
   (= "KEYWORD" (name-or-str ::KEYWORD))
@@ -21,5 +31,15 @@
   (= "[]" (name-or-str []))
   (= "10" (name-or-str 10))
   (= "" (name-or-str "")))
+
+(deftest* fullname-or-str-test
+  (= "KEYWORD" (fullname-or-str :KEYWORD))
+  (= "foo/KEYWORD" (fullname-or-str :foo/KEYWORD))
+  (= "SYMBOL" (fullname-or-str 'SYMBOL))
+  (= "hoge/SYMBOL" (fullname-or-str 'hoge/SYMBOL))
+  (= "STRING" (fullname-or-str "STRING"))
+  (= "[]" (fullname-or-str []))
+  (= "10" (fullname-or-str 10))
+  (= "" (fullname-or-str "")))
 
 ;; (run-tests)
