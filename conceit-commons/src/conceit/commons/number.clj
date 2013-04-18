@@ -5,7 +5,8 @@
   "Returns an integer value converted from `x`, or nil if `x` can not to be converted to an integer value."
   (fn [x] (type x)))
 (defmethod int-from :default [x]
-  (long x))
+  (try (long x)
+       (catch Exception exception nil)))
 (defmethod int-from Character [c]
   (int c))
 (defmethod int-from nil [x]
@@ -17,7 +18,8 @@
   "Returns an double value converted from `x`, or nil if `x` can not to be converted to an double value."
   (fn [x] (type x)))
 (defmethod double-from :default [x]
-  (double x))
+  (try (double x)
+       (catch Exception exception nil)))
 (defmethod double-from nil [x]
   nil)
 (defmethod double-from String [s]

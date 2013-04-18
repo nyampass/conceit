@@ -19,7 +19,9 @@
   (= Long/MAX_VALUE (int-from (str Long/MAX_VALUE)))
   (= Long/MIN_VALUE (int-from (str Long/MIN_VALUE)))
   (= nil (int-from "aa"))
-  (= nil (int-from nil)))
+  (= nil (int-from nil))
+  (= nil (int-from [1 2 3]))
+  (= nil (int-from {:foo :bar})))
 
 (deftest* double-from-test
   (= 0.0 (double-from 0))
@@ -39,7 +41,9 @@
   (= Double/MIN_VALUE (double-from (str Double/MIN_VALUE)))
   (= 0.0 (double-from "0"))
   (nil? (double-from "string"))
-  (nil? (double-from nil)))
+  (nil? (double-from nil))
+  (nil? (double-from [1 2 3]))
+  (nil? (double-from {:foo :bar})))
 
 (deftest* in-range-test
   (= 10 (in-range 10))
