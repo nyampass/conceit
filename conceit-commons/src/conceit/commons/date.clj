@@ -120,20 +120,8 @@
 (defn simple-date-format [pattern date]
   (.format (SimpleDateFormat. pattern) date))
 
-(let [simple-date-format-thread-local (proxy [ThreadLocal] [] (initialValue ([] (SimpleDateFormat. "yyyy-MM-dd'T'HH:mm:ss.SSS"))))]
-  (defn rfc3339-format [date]
-    (let [simple-date-format (.get simple-date-format-thread-local)
-          offset (.getOffset (TimeZone/getDefault) (.getTime date))]
-      (.setTimeZone simple-date-format (TimeZone/getDefault))
-      (str (.format simple-date-format date)
-           (if (= 0 offset)
-             \Z
-             (str (if (< offset 0) \- \+)
-                  (let [offset (Math/abs (int (/ offset 60 60 10)))]
-                    (cond (< offset 10) (str "000" offset)
-                          (< offset 100) (str "00" offset)
-                          (< offset 1000) (str \0 offset)
-                          :else offset))))))))
+(defn rfc3339-format [date]
+  (conceit.commons.DateUtils/rfc3339Format date))
 
 (defn date-from-rfc3339-format [s]
   (when-let [[year month day hour minute sec _ millisec offset] (rest (first (re-seq #"^(\d{4})-(\d{2})-(\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(\.(\d{3}))?(.+)$" s)))]

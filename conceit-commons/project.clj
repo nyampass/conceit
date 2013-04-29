@@ -1,9 +1,11 @@
-(defproject conceit/conceit-commons "1.0.37"
+(defproject conceit/conceit-commons "1.0.38"
   :description "Common libraries for Clojure."
   :dependencies [[org.clojure/clojure "1.4.0"]]
   :dev-dependencies [[lein-ring "0.4.6"]
                      [swank-clojure "1.4.0"]]
-  :aot [conceit.commons
+  :java-source-paths ["src/java"]
+  :aot [conceit.commons.java.Date
+        conceit.commons
         conceit.commons.class-loader
         conceit.commons.csv
         conceit.commons.digest
