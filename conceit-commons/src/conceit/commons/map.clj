@@ -32,11 +32,11 @@
 (defn make-map-with-keys-by [f seq]
   (map-to-map #(vector (f %) %) seq))
 
-(defn map-map [f map]
-  (map-to-map (fn [[key val]] [key (f val)]) map))
+(defn map-map [f m]
+  (reduce (fn [result [k v]] (assoc result k (f v))) {} m))
 
-(defn map-map-keys [f map]
-  (map-to-map (fn [[key val]] [(f key) val]) map))
+(defn map-map-keys [f m]
+  (reduce (fn [result [k v]] (assoc result (f k) v)) {} m))
 
 (defn deep-merge [& maps]
   (apply merge-with (fn [val1 val2]
