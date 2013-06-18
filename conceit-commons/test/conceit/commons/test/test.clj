@@ -161,6 +161,6 @@
   (is (= 10 (* 2 5)))
   (is (= 20 (* 2 10))))
 
-;; (run-test #'sample-test)
+;; (run-test sample-test)
 
 ;; (run-tests)

@@ -60,7 +60,7 @@
 (defmacro deftest* [name & body]
   `(deftest ~name ~@(map convert-with-assertion body)))
 
-(defn run-test
+(defn do-test
   ([var ns]
      (binding [*report-counters* (ref *initial-report-counters*)] 
        (do-report {:type :begin-test-ns :ns ns})
@@ -70,6 +70,10 @@
        (do-report {:type :end-test-ns :ns ns})
        (let [summary (assoc @*report-counters* :type :summary)]
          (do-report summary)
-         summary)))
+         summary))))
+
+(defmacro run-test
+  ([var ns]
+     `(do-test (var ~var) ~ns))
   ([var]
-     (run-test var *ns*)))
+     `(run-test ~var *ns*)))
