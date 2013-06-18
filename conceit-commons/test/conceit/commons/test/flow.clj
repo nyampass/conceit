@@ -145,6 +145,9 @@
              (if-let* [a 1 b (* 2 a)]
                [a b]
                [0 0])))
+  (= [0 1 2 3] (if-let* [[a b] [0 1] [c d] [2 3]] [a b c d] [0 0 0 0]))
+  (= [0 0 0 0] (if-let* [[a b] [0 1] [c d] nil] [a b c d] [0 0 0 0]))
+  (= [0 0 0 0] (if-let* [[a b] nil [c d] [2 3]] [a b c d] [0 0 0 0]))
   (if-let* [x 10 y 20]
     (= 30 (+ x y))
     (is nil "Unexpected."))
@@ -193,6 +196,23 @@
                             [:else x y z]))
       (= [:else 10 20 30] (if-let* [x nil y 2 z 3]
                             [:then x y z]
-                            [:else x y z])))))
+                            [:else x y z]))))
+  (testing "recur"
+    (= [10 true] (loop [x 10]
+                   (if-let* [y (even? x)]
+                     [x y]
+                     (recur (dec x)))))
+    (= [8 true] (loop [x 9]
+                  (if-let* [y (even? x)]
+                    [x y]
+                    (recur (dec x)))))
+    (= [10 9 true] (loop [x 10]
+                     (if-let* [y (dec x) z (even? x)]
+                       [x y z]
+                       (recur (dec x)))))
+    (= [8 7 true] (loop [x 9]
+                    (if-let* [y (dec x) z (even? x)]
+                      [x y z]
+                      (recur (dec x)))))))
 
 ;; (run-tests)

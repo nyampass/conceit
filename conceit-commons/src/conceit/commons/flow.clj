@@ -27,15 +27,21 @@
 
 (defmacro if-let*
   ([bindings then else]
-     (cond (empty? bindings) then
-           (<= (count bindings) 2) `(if-let [~@bindings] ~then ~else)
-           :else (let [else## (gensym :else)]
-                   `(let [~else## (fn [] ~else)]
-                      ~(reduce (fn [form binding]
-                                 `(if-let [~@binding]
-                                    ~form
-                                    (~else##)))
-                               then
-                               (reverse (partition-all 2 bindings)))))))
+     (if (empty? bindings)
+       then
+       (let [pairs (partition 2 bindings)
+             syms (map (comp gensym first) pairs)]
+         `(let [[~@syms] (let [~(first syms) ~(second (first pairs))
+                               ~(ffirst pairs) ~(first syms)
+                               ~@(mapcat (fn [[previous-sym sym] [binding-var expr]] `(~sym (and ~previous-sym ~expr) ~binding-var ~sym))
+                                         (partition 2 1 syms)
+                                         (rest pairs))]
+                           [~@syms])]
+            (if ~(last syms)
+              (let [~@(mapcat (fn [binding-var sym] `(~binding-var ~sym))
+                              (map first pairs)
+                              syms)]
+                ~then)
+              ~else)))))
   ([bindings then]
      `(if-let* ~bindings ~then nil)))
